@@ -4,13 +4,14 @@ CC = c99
 CFLAGS = -Wall 
 LIBS = -lm #-fopenmp
 
+test: clean all
+	./fishing
+
 all: target
 target: fishing
 
 OBJS = fishing.o util.o fish.o ocean.o
 
-test: clean all
-	./fishing
 
 fishing: $(OBJS)
 	$(CC) -o fishing $(OBJS) $(OPT) $(LIBS) $(CFLAGS)
