@@ -1,9 +1,14 @@
 #include "util.h"
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
+double max(double a, double b){
+    return a > b ? a : b;
+}
 double ranf(){
-    return (double) rand()/ (double) RAND_MAX;
+    double x = (double) rand()/ (double) RAND_MAX;
+    return x;
 }
 
 
@@ -53,7 +58,8 @@ double box_muller(double m, double s)	/* normal random variate generator */
 
 
 double randRange (double min, double max) {
-    return ranf()*(max-min) + min;
+    double res = ranf()*(max-min) + min;
+    return res;
 }
 
 double randNormal (double mean, double stddev) {
