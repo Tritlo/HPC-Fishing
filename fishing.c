@@ -10,7 +10,7 @@
 
 void printSharpLine(Ocean ocean){
     for(int j =0; j < ocean.width+2+(GRIDCELLSX-1);j++){
-        printf("#");
+        printf("-");
     }
     printf("\n");
 }
@@ -28,10 +28,10 @@ void render(Ocean ocean,Boat boats[], Fish fishes[]){
         if (i == ocean.height/GRIDCELLSY){
             printSharpLine(ocean);
         }
-        printf("#");
+        printf("|");
         for(int j =0; j < ocean.width;j++){
             if (j == ocean.width/GRIDCELLSX){
-                printf("#");
+                printf("|");
             }
             int v = ocean.map[i][j];
             switch(v){
@@ -52,7 +52,7 @@ void render(Ocean ocean,Boat boats[], Fish fishes[]){
                     break;
             }
         }
-        printf("#\n");
+        printf("|\n");
     }
     printSharpLine(ocean);
 }
