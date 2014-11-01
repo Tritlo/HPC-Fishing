@@ -9,9 +9,14 @@
 
 
 void printSharpLine(Ocean ocean){
-    for(int j =0; j < ocean.width+2+(GRIDCELLSX-1);j++){
+    printf("+");
+    for(int j =0; j < ocean.width;j++){
+        if (j == ocean.width/GRIDCELLSX){
+            printf("+");
+        }
         printf("-");
     }
+    printf("+");
     printf("\n");
 }
 void render(Ocean ocean,Boat boats[], Fish fishes[]){
