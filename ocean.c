@@ -1,5 +1,6 @@
 #include "ocean.h"
 #include "util.h"
+#include "grid.h"
 #include "boat.h"
 #include <math.h>
 #include <stdio.h>

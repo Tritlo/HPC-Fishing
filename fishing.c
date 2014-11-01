@@ -8,6 +8,12 @@
 #include <math.h>
 
 
+void printSharpLine(Ocean ocean){
+    for(int j =0; j < ocean.width+2+(GRIDCELLSX-1);j++){
+        printf("#");
+    }
+    printf("\n");
+}
 void render(Ocean ocean,Boat boats[], Fish fishes[]){
     clearOcean(&ocean);
     for(int i = 0; i < NUMFISHES; i++){
@@ -17,13 +23,16 @@ void render(Ocean ocean,Boat boats[], Fish fishes[]){
         addBoatToOcean(&ocean,boats[i]);
     }
     printf("Ocean w, h: %d, %d\n",ocean.width,ocean.height);
-    for(int j =0; j < ocean.width+2;j++){
-        printf("#");
-    }
-    printf("\n");
+    printSharpLine(ocean);
     for(int i =0; i < ocean.height; i++){
+        if (i == ocean.height/GRIDCELLSY){
+            printSharpLine(ocean);
+        }
         printf("#");
         for(int j =0; j < ocean.width;j++){
+            if (j == ocean.width/GRIDCELLSX){
+                printf("#");
+            }
             int v = ocean.map[i][j];
             switch(v){
                 case 0:
@@ -45,10 +54,7 @@ void render(Ocean ocean,Boat boats[], Fish fishes[]){
         }
         printf("#\n");
     }
-    for(int j =0; j < ocean.width+2;j++){
-        printf("#");
-    }
-    printf("\n");
+    printSharpLine(ocean);
 }
 
 
