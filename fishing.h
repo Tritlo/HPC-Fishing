@@ -1,2 +1,5 @@
-#define NUMSCHOOLS 10
+
+#define NUMSCHOOLS 20
 #define FISHESINSCHOOL 1
+
+

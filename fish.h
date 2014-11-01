@@ -1,8 +1,8 @@
+#include "grid.h"
+#include "boat.h"
 #ifndef FISH
 #define FISH
 
-#define XMAX 1000
-#define YMAX 1000
 #define MINS 0.1
 #define MAXS 0.3
 #define XSD 1
@@ -27,5 +27,5 @@ typedef struct {
 
 extern School newSchool();
 extern Fish newFish(int school, School schools[]);
-extern void updateSchool(School school[],Fish fishes[], int schoolid,double dt);
+extern void updateSchool(Boat boats[], School school[],Fish fishes[], int schoolid,double dt);
 #endif

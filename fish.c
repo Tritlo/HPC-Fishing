@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include "boat.h"
 
 
 
@@ -41,7 +42,7 @@ School newSchool(){
     return s;
 }
 
-void updateFish(Fish *f, double dt){
+void updateFish(Boat boats[],Fish *f, double dt){
     double fx = f->loc[0];
     double fy = f->loc[1];
     double vx = f->vel[0];
@@ -51,25 +52,37 @@ void updateFish(Fish *f, double dt){
     vy = randNormal(vy,CVYSD);
     double nx =  fx+vx*dt;
     double ny =  fy+vy*dt;
+
     //Bounce of ocean edges
     if (nx < 0 || nx > XMAX) vx *= -1;
     if ( ny < 0 || ny > YMAX) vy *= -1;
+    for(int i = 0; i < NUMBOATS; i++){
+        if(isInNet(boats[i].net,fx,fy)){
+            boats[i].net.caught += 1;
+            if(!isInNet(boats[i].net,nx,fy)){
+                vx *=-1;
+            }
+            if(!isInNet(boats[i].net,fx,ny)){
+                vy *=-1;
+            }
+        }
+    }
+
+
     nx =  fx+vx*dt;
     ny =  fy+vy*dt;
     f->loc[0] = nx;
     f->loc[1] = ny;
     f->vel[0] = vx;
     f->vel[1] = vy;
-    
-
 }
 
-void updateSchool(School school[],Fish fishes[], int schoolid,double dt)
+void updateSchool(Boat boats[], School school[], Fish fishes[], int schoolid,double dt)
 {
     double mx =0, my = 0, mvx =0, mvy =0;
     for(int i =0; i < FISHESINSCHOOL;i++){
         int ind = schoolid*FISHESINSCHOOL + i;
-        updateFish(&fishes[ind],dt);
+        updateFish(boats,&fishes[ind],dt);
         mx += fishes[ind].loc[0];
         my += fishes[ind].loc[1];
         mvx += fishes[ind].vel[0];

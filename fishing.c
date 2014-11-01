@@ -1,4 +1,5 @@
 #include "fish.h"
+#include "boat.h"
 #include "fishing.h"
 #include "ocean.h"
 #include <stdio.h>
@@ -7,10 +8,13 @@
 #include <math.h>
 
 
-void render(Ocean ocean, Fish fishes[]){
+void render(Ocean ocean,Boat boats[], Fish fishes[]){
     clearOcean(&ocean);
     for(int i = 0; i < NUMSCHOOLS*FISHESINSCHOOL; i++){
         addFishToOcean(&ocean,fishes[i]);
+    }
+    for(int i = 0; i < NUMBOATS; i++){
+        addBoatToOcean(&ocean,boats[i]);
     }
     printf("Ocean w, h: %d, %d\n",ocean.width,ocean.height);
     for(int j =0; j < ocean.width+2;j++){
@@ -28,6 +32,12 @@ void render(Ocean ocean, Fish fishes[]){
                 case 1:
                     printf("f");
                     break;
+                case 2:
+                    printf("b");
+                    break;
+                case 3:
+                    printf("n");
+                    break;
                 default:
                     printf("%d",v);
                     break;
@@ -41,6 +51,13 @@ void render(Ocean ocean, Fish fishes[]){
     printf("\n");
 }
 
+void updateBoat(Boat *boat){
+    if(boat->net.caught > 0){
+        printf("boat has %d in nets. \n", boat->net.caught);
+        boat->net.caught = 0;
+    }
+}
+
 /* We should probably use only fishes, and not
  * any of these school things. 
  * I've set FISHESINSCHOOl to 1
@@ -49,9 +66,12 @@ void render(Ocean ocean, Fish fishes[]){
  * and it'd be quite a hassle to implement.
  */
 
-void update(School schools[], Fish fishes[],double dt){
+void update(Boat boats[],School schools[], Fish fishes[],double dt){
     for(int i =0; i < NUMSCHOOLS; i++){
-        updateSchool(schools,fishes, i,dt);
+        updateSchool(boats,schools,fishes, i,dt);
+    }
+    for(int i = 0; i < NUMBOATS; i++){
+        updateBoat(&boats[i]);
     }
 }
 
@@ -75,9 +95,16 @@ int main (int argc, char *argv[]) {
             fishes[j*FISHESINSCHOOL+i] = f;
         }
     }
-    for(int i =0; i < 100; i++){
-        update(schools,fishes,10);
-        render(ocean,fishes);
+
+    Boat boats[NUMBOATS];
+
+    for(int i =0; i < NUMBOATS; i++){
+        boats[i] = newBoat();
+    }
+
+    for(int i =0; i < 1000; i++){
+        update(boats,schools,fishes,10);
+        render(ocean,boats,fishes);
         sleep(1);
     }
     return 0;

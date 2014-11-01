@@ -10,7 +10,7 @@ test: clean all
 all: target
 target: fishing
 
-OBJS = fishing.o util.o fish.o ocean.o
+OBJS = fishing.o util.o fish.o ocean.o grid.o boat.o
 
 
 fishing: $(OBJS)
@@ -29,5 +29,11 @@ fish.o: fish.c fish.h
 ocean.o: ocean.c ocean.h
 	$(CC) -c ocean.c -o ocean.o $(OPT) $(CFLAGS)
 
+boat.o: boat.c boat.h
+	$(CC) -c boat.c -o boat.o $(OPT) $(CFLAGS)
+
+grid.o: grid.c grid.h
+	$(CC) -c grid.c -o grid.o $(OPT) $(CFLAGS)
+
 clean:
-	rm *.o fishing
+	rm -f *.o fishing
