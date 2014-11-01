@@ -10,7 +10,7 @@
 
 void render(Ocean ocean,Boat boats[], Fish fishes[]){
     clearOcean(&ocean);
-    for(int i = 0; i < NUMSCHOOLS*FISHESINSCHOOL; i++){
+    for(int i = 0; i < NUMFISHES; i++){
         addFishToOcean(&ocean,fishes[i]);
     }
     for(int i = 0; i < NUMBOATS; i++){
@@ -51,24 +51,10 @@ void render(Ocean ocean,Boat boats[], Fish fishes[]){
     printf("\n");
 }
 
-void updateBoat(Boat *boat){
-    if(boat->net.caught > 0){
-        printf("boat has %d in nets. \n", boat->net.caught);
-        boat->net.caught = 0;
-    }
-}
 
-/* We should probably use only fishes, and not
- * any of these school things. 
- * I've set FISHESINSCHOOl to 1
- * to emulate this, as the fishes in
- * the school don't have a logic to follow each other,
- * and it'd be quite a hassle to implement.
- */
-
-void update(Boat boats[],School schools[], Fish fishes[],double dt){
-    for(int i =0; i < NUMSCHOOLS; i++){
-        updateSchool(boats,schools,fishes, i,dt);
+void update(Boat boats[], Fish fishes[],double dt){
+    for(int i =0; i < NUMFISHES;i++){
+        updateFish(boats,&fishes[i],dt);
     }
     for(int i = 0; i < NUMBOATS; i++){
         updateBoat(&boats[i]);
@@ -79,21 +65,18 @@ void out (int n){
     printf("%d \n",n);
 }
 
-int main (int argc, char *argv[]) {
+int main (int argc, char *argv[]) 
+{
     srand(time(NULL));
     Ocean ocean;
     initOcean(&ocean);
 
-    School schools[NUMSCHOOLS];
-    for(int i =0; i < NUMSCHOOLS; i++){
-        schools[i] = newSchool();
-    }
-    Fish fishes[FISHESINSCHOOL*NUMSCHOOLS];
-    for(int j = 0; j < NUMSCHOOLS; j++){
-        for(int i =0; i < FISHESINSCHOOL; i++){
-            Fish f = newFish(j,schools);
-            fishes[j*FISHESINSCHOOL+i] = f;
-        }
+    Fish fishes[NUMFISHES];
+
+    for(int i =0; i < NUMFISHES; i++)
+    {
+            Fish f = newFish();
+            fishes[i] = f;
     }
 
     Boat boats[NUMBOATS];
@@ -103,7 +86,7 @@ int main (int argc, char *argv[]) {
     }
 
     for(int i =0; i < 1000; i++){
-        update(boats,schools,fishes,10);
+        update(boats,fishes,10);
         render(ocean,boats,fishes);
         sleep(1);
     }

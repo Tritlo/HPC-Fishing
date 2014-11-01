@@ -15,17 +15,11 @@
 typedef struct {
     double loc[2];
     double vel[2];   //velocity
-    int school;          //What group the fish is in.
 } Fish;
 
 
-typedef struct {
-    double loc [2]; //Location of school;
-    double vel[2];
-} School;
 
 
-extern School newSchool();
-extern Fish newFish(int school, School schools[]);
-extern void updateSchool(Boat boats[], School school[],Fish fishes[], int schoolid,double dt);
+extern Fish newFish();
+extern void updateFish(Boat boats[],Fish *f, double dt);
 #endif

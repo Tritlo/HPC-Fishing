@@ -10,39 +10,24 @@
 
 
 
-
-Fish newFish(int school, School schools[]){
-    School s = schools[school];
+Fish newFish()//
+{
     Fish f;
-    double sx = s.loc[0]; 
-    double sy = s.loc[1]; 
-    double svx = s.vel[0]; 
-    double svy = s.vel[1]; 
-    double fx = max(0,randNormal(sx,XSD));
-    double fy = max(0,randNormal(sy,YSD));
+    double fx = randRange(0,XMAX);
+    double fy = randRange(0,YMAX);
     f.loc[0] = fx;
     f.loc[1] = fy;
-    f.vel[0] = randNormal(svx,VXSD);
-    f.vel[1] = randNormal(svy,VYSD);
-    f.school = school;
+    double speed = randRange(MINS,MAXS);
+    double dir = randRange(0,2*PI);
+    f.vel[0] = speed*cos(dir);
+    f.vel[1] = speed*sin(dir);
     return f;
 
 }
 
-School newSchool(){
-    School s;
-    double x = randRange(0,XMAX);
-    double y = randRange(0,YMAX);
-    s.loc[0] = x;
-    s.loc[1] = y;
-    double speed = randRange(MINS,MAXS);
-    double dir = randRange(0,2*PI);
-    s.vel[0] = speed*cos(dir);
-    s.vel[1] = speed*sin(dir);
-    return s;
-}
 
-void updateFish(Boat boats[],Fish *f, double dt){
+void updateFish(Boat boats[],Fish *f, double dt)
+{
     double fx = f->loc[0];
     double fy = f->loc[1];
     double vx = f->vel[0];
@@ -68,30 +53,11 @@ void updateFish(Boat boats[],Fish *f, double dt){
         }
     }
 
-
     nx =  fx+vx*dt;
     ny =  fy+vy*dt;
+    //int nextgridc = getGridCell(nx,ny);
     f->loc[0] = nx;
     f->loc[1] = ny;
     f->vel[0] = vx;
     f->vel[1] = vy;
 }
-
-void updateSchool(Boat boats[], School school[], Fish fishes[], int schoolid,double dt)
-{
-    double mx =0, my = 0, mvx =0, mvy =0;
-    for(int i =0; i < FISHESINSCHOOL;i++){
-        int ind = schoolid*FISHESINSCHOOL + i;
-        updateFish(boats,&fishes[ind],dt);
-        mx += fishes[ind].loc[0];
-        my += fishes[ind].loc[1];
-        mvx += fishes[ind].vel[0];
-        mvy += fishes[ind].vel[1];
-    }
-    school[schoolid].loc[0] = mx/FISHESINSCHOOL;
-    school[schoolid].loc[1] = my/FISHESINSCHOOL;
-    school[schoolid].vel[0] = mvx/FISHESINSCHOOL;
-    school[schoolid].vel[1] = mvy/FISHESINSCHOOL;
-
-}
-
