@@ -1,7 +1,7 @@
 OPT = -O2
 
-CC = c99
-CFLAGS = -Wall 
+CC = mpicc
+CFLAGS = -Wall  -std=c99
 LIBS = -lm #-fopenmp
 
 test: clean all

@@ -16,3 +16,4 @@ extern void initOcean(Ocean* ocean);
 extern void addFishToOcean(Ocean* ocean,Fish f);
 extern void addBoatToOcean(Ocean *ocean,Boat b);
 extern void clearOcean(Ocean* ocean);
+extern void render(Ocean ocean,Boat boats[], Fish fishes[]);

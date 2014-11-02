@@ -1,4 +1,6 @@
 #include "ocean.h"
+#include "fish.h"
+#include "fishing.h"
 #include "util.h"
 #include "grid.h"
 #include "boat.h"
@@ -6,6 +8,59 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void printSharpLine(Ocean ocean){
+    for(int j =0; j < ocean.width;j++){
+        if (j % (ocean.width/GRIDCELLSX) == 0){
+            printf("+");
+        }
+        printf("-");
+    }
+    printf("+");
+    printf("\n");
+}
+void render(Ocean ocean,Boat boats[], Fish fishes[])
+{
+    clearOcean(&ocean);
+    for(int i = 0; i < NUMFISHES; i++){
+        addFishToOcean(&ocean,fishes[i]);
+    }
+    for(int i = 0; i < NUMBOATS; i++){
+        addBoatToOcean(&ocean,boats[i]);
+    }
+    printf("Ocean w, h: %d, %d\n",ocean.width,ocean.height);
+    /* printSharpLine(ocean); */
+    for(int i =0; i < ocean.height; i++){
+        if (i % ( ocean.height/GRIDCELLSY) == 0){
+            printSharpLine(ocean);
+        }
+        /* printf("|"); */
+        for(int j =0; j < ocean.width;j++){
+            if (j % ( ocean.width/GRIDCELLSX) == 0){
+                printf("|");
+            }
+            int v = ocean.map[i][j];
+            switch(v){
+                case 0:
+                    printf(".");
+                    break;
+                case 1:
+                    printf("f");
+                    break;
+                case 2:
+                    printf("b");
+                    break;
+                case 3:
+                    printf("n");
+                    break;
+                default:
+                    printf("%d",v);
+                    break;
+            }
+        }
+        printf("|\n");
+    }
+    printSharpLine(ocean);
+}
 
 void clearOcean(Ocean *ocean)
 {

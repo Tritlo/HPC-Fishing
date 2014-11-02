@@ -2,64 +2,14 @@
 #include "boat.h"
 #include "fishing.h"
 #include "ocean.h"
+
+
+#include <mpi.h> 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
 
-
-void printSharpLine(Ocean ocean){
-    for(int j =0; j < ocean.width;j++){
-        if (j % (ocean.width/GRIDCELLSX) == 0){
-            printf("+");
-        }
-        printf("-");
-    }
-    printf("+");
-    printf("\n");
-}
-void render(Ocean ocean,Boat boats[], Fish fishes[]){
-    clearOcean(&ocean);
-    for(int i = 0; i < NUMFISHES; i++){
-        addFishToOcean(&ocean,fishes[i]);
-    }
-    for(int i = 0; i < NUMBOATS; i++){
-        addBoatToOcean(&ocean,boats[i]);
-    }
-    printf("Ocean w, h: %d, %d\n",ocean.width,ocean.height);
-    /* printSharpLine(ocean); */
-    for(int i =0; i < ocean.height; i++){
-        if (i % ( ocean.height/GRIDCELLSY) == 0){
-            printSharpLine(ocean);
-        }
-        /* printf("|"); */
-        for(int j =0; j < ocean.width;j++){
-            if (j % ( ocean.width/GRIDCELLSX) == 0){
-                printf("|");
-            }
-            int v = ocean.map[i][j];
-            switch(v){
-                case 0:
-                    printf(".");
-                    break;
-                case 1:
-                    printf("f");
-                    break;
-                case 2:
-                    printf("b");
-                    break;
-                case 3:
-                    printf("n");
-                    break;
-                default:
-                    printf("%d",v);
-                    break;
-            }
-        }
-        printf("|\n");
-    }
-    printSharpLine(ocean);
-}
 
 
 void update(Boat boats[], Fish fishes[],double dt){
@@ -75,11 +25,18 @@ void out (int n){
     printf("%d \n",n);
 }
 
-int main (int argc, char *argv[]) 
+int main (int argc, char *argv[])
 {
     srand(time(NULL));
     Ocean ocean;
     initOcean(&ocean);
+
+	/* MPI_Status Stat; */ 
+	MPI_Init(&argc,&argv); 
+
+	//MPI_Comm_size(MPI_COMM_WORLD, &numtasks); 
+
+	/* MPI_Comm_rank(MPI_COMM_WORLD, &rank); */ 
 
     Fish fishes[NUMFISHES];
 
@@ -100,5 +57,7 @@ int main (int argc, char *argv[])
         render(ocean,boats,fishes);
         sleep(1);
     }
+
+    MPI_Finalize(); 
     return 0;
 }
