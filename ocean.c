@@ -84,19 +84,19 @@ void initOcean(Ocean* ocean)
 
 void addFishToOcean(Ocean *ocean,Fish f)
 {
-    int x = (int) floor(OWIDTH*(f.loc[0]/XMAX));
-    int y = (int) floor(OHEIGHT*(f.loc[1]/YMAX));
+    int x = (int) floor(OWIDTH*(f.x/XMAX));
+    int y = (int) floor(OHEIGHT*(f.y/YMAX));
     ocean->map[y][x] = 1;
 }
 
 void addBoatToOcean(Ocean *ocean,Boat b)
 {
-    int x = (int) floor(OWIDTH*(b.loc[0]/XMAX));
-    int y = (int) floor(OHEIGHT*(b.loc[1]/YMAX));
-    int nx1 = (int) floor(OWIDTH*((b.net.loc[0]-b.net.width)/XMAX));
-    int nx2 = (int) floor(OWIDTH*((b.net.loc[0]+b.net.width)/XMAX));
-    int ny1 = (int) floor(OHEIGHT*((b.net.loc[1]-b.net.height)/YMAX));
-    int ny2 = (int) floor(OHEIGHT*((b.net.loc[1]+b.net.height)/YMAX));
+    int x = (int) floor(OWIDTH*(b.x/XMAX));
+    int y = (int) floor(OHEIGHT*(b.y/YMAX));
+    int nx1 = (int) floor(OWIDTH*((b.net.x-b.net.width)/XMAX));
+    int nx2 = (int) floor(OWIDTH*((b.net.x+b.net.width)/XMAX));
+    int ny1 = (int) floor(OHEIGHT*((b.net.y-b.net.height)/YMAX));
+    int ny2 = (int) floor(OHEIGHT*((b.net.y+b.net.height)/YMAX));
     ocean->map[ny1][nx1] = 3;
     ocean->map[ny2][nx1] = 3;
     ocean->map[ny1][nx2] = 3;

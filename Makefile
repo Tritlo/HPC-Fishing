@@ -5,6 +5,7 @@ CFLAGS = -Wall  -std=c99
 LIBS = -lm #-fopenmp
 
 test: clean all
+	#mpirun -n 6 ./fishing
 	mpirun ./fishing
 
 all: target

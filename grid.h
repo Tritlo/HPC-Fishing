@@ -3,6 +3,7 @@
 
 #define XMAX 1000
 #define YMAX 1000
+#define NUMPROCS 6
 
 //#define GRIDCELLSX 2
 //#define GRIDCELLSY 2

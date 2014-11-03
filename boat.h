@@ -8,14 +8,17 @@
 #define MAXINNET 3
 
 typedef struct {
-    double loc[2];
+	double x;
+	double y;
     double width;
     double height;
     int caught;
+    int maxCaught;
 } Net;
 
 typedef struct {
-    double loc[2];
+	double x;
+	double y;
     Net net;
 } Boat;
 

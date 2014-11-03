@@ -13,8 +13,10 @@
 #define CVYSD 0.2
 
 typedef struct {
-    double loc[2];
-    double vel[2];   //velocity
+	double x;
+	double y;
+	double vx;
+	double vy;
 } Fish;
 
 

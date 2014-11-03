@@ -63,7 +63,7 @@ int main (int argc, char *argv[])
     for(int i =0; i < NUMFISHES; i++)
     {
             Fish f = newFish();
-            int cell = getGridCell(f.loc[0],f.loc[1]);
+            int cell = getGridCell(f.x,f.y);
             fishes[FISHCOORD(cell,fishesInCell[cell]++)] = f;
     }
 
