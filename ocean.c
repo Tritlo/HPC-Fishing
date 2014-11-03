@@ -18,11 +18,13 @@ void printSharpLine(Ocean ocean){
     printf("+");
     printf("\n");
 }
-void render(Ocean ocean,Boat boats[], Fish fishes[])
+void render(Ocean ocean,Boat boats[], Fish *fishes,int *fishesInCell)
 {
     clearOcean(&ocean);
-    for(int i = 0; i < NUMFISHES; i++){
-        addFishToOcean(&ocean,fishes[i]);
+    for(int j = 0; j < GRIDCELLS; j++){
+        for(int i = 0; i < fishesInCell[j]; i++){
+            addFishToOcean(&ocean,fishes[FISHCOORD(j,i)]);
+        }
     }
     for(int i = 0; i < NUMBOATS; i++){
         addBoatToOcean(&ocean,boats[i]);
