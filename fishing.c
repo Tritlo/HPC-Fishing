@@ -40,7 +40,6 @@ int main (int argc, char *argv[])
     GRIDCELLSY = 2;
 
 
-    srand(time(NULL));
     Ocean ocean;
     initOcean(&ocean);
 
@@ -51,27 +50,22 @@ int main (int argc, char *argv[])
 	MPI_Init(&argc,&argv); 
 
 	//MPI_Comm_size(MPI_COMM_WORLD, &numtasks); 
+	
 
-	 MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    Fish *fishes = malloc(GRIDCELLS*NUMFISHES);
-    int fishesInCell[GRIDCELLS];
-    for(int i = 0; i < GRIDCELLS; i ++){
-    	fishesInCell[i] = 0;
-        }
 
-    for(int i =0; i < NUMFISHES; i++)
+    srand(rank*time(NULL));
+    Fish *fishes = malloc(NUMFISHES);
+    int fishesInCell = 0;
+    Boat boatj;
+    for(int i =0; i < NUMFISHES/4; i++)
     {
             Fish f = newFish();
-            int cell = getGridCell(f.x,f.y);
-            fishes[FISHCOORD(cell,fishesInCell[cell]++)] = f;
+            fishes[i] = f;
     }
 
-    Boat boats[NUMBOATS];
 
-    for(int i =0; i < NUMBOATS; i++){
-        boats[i] = newBoat();
-    }
 
     for(int i =0; i < 1000; i++){
         update(boats,fishes,fishesInCell,10);
