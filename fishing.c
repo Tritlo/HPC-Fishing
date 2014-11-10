@@ -1,3 +1,7 @@
+// HPC Fishing, by Matthías Páll Gissurarson
+//
+// Run with make to get a pretty rendering
+// of the outputted binary files via python.
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
@@ -32,9 +36,9 @@ int main (int argc, char** argv) {
     //Seed random for each rank.
     srand((rank+1)*time(NULL));
 
-	dims[0]=4, dims[1] = 4;
-    captains[0] = 7;
-    captains[1] = 14;
+	dims[0]=5, dims[1] = 5;
+    captains[0] = 15;
+    captains[1] = 23;
     int direction = 0;
     int maxinnets = 5;
 

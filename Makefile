@@ -6,7 +6,7 @@ LIBS = -lm #-fopenmp
 
 
 test: clean all
-	mpirun  -n 16 ./fishing
+	mpirun  -n 25 ./fishing
 	./render.py
 
 all: target
