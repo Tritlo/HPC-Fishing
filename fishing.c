@@ -58,7 +58,7 @@ int main (int argc, char *argv[])
     srand(rank*time(NULL));
     Fish *fishes = malloc(NUMFISHES);
     int fishesInCell = 0;
-    Boat boatj;
+    Boat boats[NUMBOATS];
     for(int i =0; i < NUMFISHES/4; i++)
     {
             Fish f = newFish();
